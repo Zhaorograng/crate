@@ -49,20 +49,26 @@ public class StringTypeTest extends CrateUnitTest {
     }
 
     @Test
-    public void test_text_type_without_length_limit_on_string_literal() {
-        assertThat(StringType.INSTANCE.value("abc"), is("abc"));
+    public void test_implicit_cast_on_text_with_length_ignores_length_limit() {
+        assertThat(StringType.of(1).implicitCast("abcde"), is("abcde"));
+        assertThat(StringType.of(2).implicitCast("a    "), is("a    "));
     }
 
     @Test
-    public void test_text_type_with_length_on_string_literal_of_length_gt_length_limit_truncates_chars() {
-        assertThat(StringType.of(1).value("abcde"), is("a"));
-        assertThat(StringType.of(2).value("a    "), is("a "));
+    public void test_explicit_cast_text_without_length_limit() {
+        assertThat(StringType.INSTANCE.explicitCast("abc"), is("abc"));
     }
 
     @Test
-    public void test_text_type_with_length_on_string_literal_of_length_lte_length() {
-        assertThat(StringType.of(5).value("abc"), is("abc"));
-        assertThat(StringType.of(1).value("a"), is("a"));
+    public void test_explicit_cast_on_text_with_length_truncates_exceeding_limit_chars() {
+        assertThat(StringType.of(1).explicitCast("abcde"), is("a"));
+        assertThat(StringType.of(2).explicitCast("a    "), is("a "));
+    }
+
+    @Test
+    public void test_explicit_cast_text_with_length_on_literals_of_length_lte_length_limit() {
+        assertThat(StringType.of(5).explicitCast("abc"), is("abc"));
+        assertThat(StringType.of(1).explicitCast("a"), is("a"));
     }
 
     @Test

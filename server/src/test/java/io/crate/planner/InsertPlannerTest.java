@@ -362,7 +362,7 @@ public class InsertPlannerTest extends CrateDummyClusterServiceUnitTest {
             contains(
                 isInputColumn(0),
                 isFunction(
-                    CastFunction.CAST_NAME,
+                    CastFunction.IMPLICIT_CAST_NAME,
                     List.of(DataTypes.LONG, DataTypes.STRING)
                 )
             )
@@ -432,7 +432,7 @@ public class InsertPlannerTest extends CrateDummyClusterServiceUnitTest {
         assertThat(projections.get(0).outputs(),
             contains(
                 isFunction(
-                    CastFunction.CAST_NAME,
+                    CastFunction.IMPLICIT_CAST_NAME,
                     List.of(DataTypes.INTEGER, DataTypes.LONG)
                 ),
                 isInputColumn(1)

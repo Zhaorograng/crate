@@ -329,7 +329,7 @@ public class ExpressionAnalyzerTest extends CrateDummyClusterServiceUnitTest {
         assertThat(
             symbol2.arguments().get(1),
             isFunction(
-                CastFunction.CAST_NAME,
+                CastFunction.IMPLICIT_CAST_NAME,
                 List.of(DataTypes.INTEGER, DataTypes.LONG)
             )
         );
@@ -342,7 +342,7 @@ public class ExpressionAnalyzerTest extends CrateDummyClusterServiceUnitTest {
         assertThat(
             symbol.arguments().get(0),
             isFunction(
-                CastFunction.CAST_NAME,
+                CastFunction.IMPLICIT_CAST_NAME,
                 List.of(DataTypes.INTEGER, DataTypes.LONG)
             )
         );

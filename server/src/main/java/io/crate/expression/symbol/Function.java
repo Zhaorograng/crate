@@ -62,6 +62,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static io.crate.expression.scalar.cast.CastFunction.CAST_NAME;
+import static io.crate.expression.scalar.cast.CastFunction.IMPLICIT_CAST_NAME;
 import static io.crate.expression.scalar.cast.CastFunction.TRY_CAST_NAME;
 import static java.util.Objects.requireNonNull;
 
@@ -311,7 +312,8 @@ public class Function extends Symbol implements Cloneable {
                 if (name.startsWith(AnyOperator.OPERATOR_PREFIX)) {
                     printAnyOperator(builder, style);
                 } else if (name.equalsIgnoreCase(CAST_NAME) ||
-                           name.equalsIgnoreCase(TRY_CAST_NAME)) {
+                           name.equalsIgnoreCase(TRY_CAST_NAME) ||
+                           name.equalsIgnoreCase(IMPLICIT_CAST_NAME)) {
                     printCastFunction(builder, style);
                 } else if (name.startsWith(Operator.PREFIX)) {
                     printOperator(builder, style, null);
@@ -365,7 +367,11 @@ public class Function extends Symbol implements Cloneable {
         } else {
             asTypeName = " AS " + dataType.getName();
         }
-        builder.append(info.ident().name())
+        var name = info.ident().name();
+        if (name.equalsIgnoreCase(IMPLICIT_CAST_NAME)) {
+            name = CAST_NAME;
+        }
+        builder.append(name)
             .append("(");
         builder.append(arguments().get(0).toString(style));
         builder

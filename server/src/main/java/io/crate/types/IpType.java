@@ -36,6 +36,16 @@ public class IpType extends StringType {
     }
 
     @Override
+    public String implicitCast(Object value) throws IllegalArgumentException, ClassCastException {
+        return value(value);
+    }
+
+    @Override
+    public String explicitCast(Object value) throws IllegalArgumentException, ClassCastException {
+        return implicitCast(value);
+    }
+
+    @Override
     public String value(Object value) {
         if (value == null) {
             return null;

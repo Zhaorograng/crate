@@ -115,7 +115,7 @@ public class LiteralTest extends CrateUnitTest {
         assertThat(
             intLiteral.cast(DataTypes.LONG),
             isFunction(
-                CastFunction.CAST_NAME,
+                CastFunction.IMPLICIT_CAST_NAME,
                 List.of(intLiteral.valueType(), DataTypes.LONG)
             )
         );
