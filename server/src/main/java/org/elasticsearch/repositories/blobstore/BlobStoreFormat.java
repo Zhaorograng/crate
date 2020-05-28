@@ -98,13 +98,6 @@ public abstract class BlobStoreFormat<T extends ToXContent> {
         blobContainer.deleteBlob(blobName(name));
     }
 
-    /**
-     * Checks obj in the blob container
-     */
-    public boolean exists(BlobContainer blobContainer, String name) throws IOException {
-        return blobContainer.blobExists(blobName(name));
-    }
-
     protected String blobName(String name) {
         return String.format(Locale.ROOT, blobNameFormat, name);
     }
